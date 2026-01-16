@@ -285,6 +285,21 @@ body.dark .dark-toggle{
   background:#ffffff;
   color:#3a135f;
 }
+
+@keyframes cardFadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.card{
+  animation:cardFadeUp .5s ease forwards;
+}
 </style>
 </head>
 

@@ -284,6 +284,7 @@ body.dark .dark-toggle{
   <h3>Categorias</h3>
   <button onclick="filterCategory('all')">Todos</button>
   <button onclick="filterCategory('volta-aulas')">Volta às Aulas</button>
+  <button onclick="filterCategory('cozinha')">Cozinha</button>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
@@ -291,7 +292,7 @@ body.dark .dark-toggle{
 </aside>
 
 <section>
-<h2>🎒 Volta às Aulas 2026</h2>
+<h2 id="categoryTitle">🎒 Volta às Aulas 2026</h2>
 <div class="grid">
 <!-- Kit Mochila Rodinha infantil -->
 <div class="card" data-category="volta-aulas" data-name="kit mochila escolar infantil"
@@ -338,14 +339,28 @@ onclick="openModal('Estojo Escolar 72 Pens','Otimize sua rotina criativa com est
 
 <script>
 function filterCategory(cat){
+  const title = document.getElementById('categoryTitle');
+
+  if(cat === 'all'){
+    title.innerText = '🔥 Todos os Produtos';
+  }
+  if(cat === 'volta-aulas'){
+    title.innerText = '🎒 Volta às Aulas 2026';
+  }
+  if(cat === 'cozinha'){
+    title.innerText = '🍳 Cozinha';
+  }
+
   document.querySelectorAll('.card').forEach(c=>{
-    c.style.display = (cat==='all'||c.dataset.category===cat)?'block':'none';
+    c.style.display = (cat === 'all' || c.dataset.category === cat) ? 'block' : 'none';
   });
 }
 function searchProduct(){
-  const v=document.getElementById('searchInput').value.toLowerCase();
+  const v = document.getElementById('searchInput').value.toLowerCase();
+
   document.querySelectorAll('.card').forEach(c=>{
-    c.style.display=c.dataset.name.includes(v)?'block':'none';
+    const name = c.dataset.name.toLowerCase();
+    c.style.display = name.includes(v) ? 'block' : 'none';
   });
 }
 function toggleDarkMode(){

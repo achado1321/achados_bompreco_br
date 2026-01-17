@@ -443,6 +443,43 @@ body.dark .dark-toggle{
     padding:15px;
   }
 }
+/* Botão só no mobile */
+.mobile-filter-btn{
+  display:none;
+  width:100%;
+  padding:12px;
+  font-size:1rem;
+  background:#6b3fc9;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  margin:15px 0;
+  cursor:pointer;
+}
+
+/* Mobile */
+@media (max-width: 768px){
+  .mobile-filter-btn{
+    display:block;
+  }
+
+  .sidebar{
+    display:none;
+    margin-bottom:20px;
+  }
+
+  .sidebar.active{
+    display:block;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+}
+.menu-icon{
+  font-size:1.3rem;
+  margin-right:8px;
+}
 </style>
 </head>
 
@@ -463,6 +500,10 @@ body.dark .dark-toggle{
 </section>
 
 <div class="layout" id="produtos">
+<!-- BOTÃO DE CATEGORIAS (MOBILE) -->
+  <button class="mobile-filter-btn" onclick="toggleCategories()">
+     <span class="menu-icon">☰</span> Categorias
+  </button>
 
 <aside class="sidebar">
   <h3>Categorias</h3>
@@ -679,6 +720,12 @@ function updateActiveThumb(){
     thumb.classList.toggle('active', i === currentIndex);
   });
 }
+/* 👉 Botão categoria mobile */
+function toggleCategories(){
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
+}
+
 </script>
 
 </body>

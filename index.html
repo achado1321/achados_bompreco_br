@@ -1,3 +1,5 @@
+sitee
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -682,25 +684,32 @@ onclick="openModal('Fatiador Profissional Multifuncional De Aço Inoxidável','T
 <script>
 function filterCategory(cat){
   const title = document.getElementById('categoryTitle');
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(c=>{
+    c.style.display =
+      (cat === 'all' || c.dataset.category === cat) ? 'block' : 'none';
+  });
 
   if(cat === 'all'){
-    title.innerText = '🔥 Todos os Produtos';
-  }
-  if(cat === 'volta-aulas'){
-    title.innerText = '🎒 Volta às Aulas 2026';
-  }
-  if(cat === 'cozinha'){
-    title.innerText = '🍳 Cozinha';
-  }
+    title.innerText = '🔥 Achados em Destaque';
+    defaultTitle = title.innerText;
 
-  document.querySelectorAll('.card').forEach(c=>{
-    c.style.display = (cat === 'all' || c.dataset.category === cat) ? 'block' : 'none';
-  });
+  } else if(cat === 'volta-aulas'){
+    title.innerText = '🎒 Volta às Aulas';
+    defaultTitle = title.innerText;
+
+  } else if(cat === 'cozinha'){
+    title.innerText = '🥘 Cozinha';
+    defaultTitle = title.innerText;
+  }
 }
 function searchProduct(){
   const v = document.getElementById('searchInput').value.toLowerCase();
   const cards = document.querySelectorAll('.card');
   const noResults = document.getElementById('noResults');
+  const title = document.getElementById('categoryTitle');
+
   let found = false;
 
   cards.forEach(c=>{
@@ -711,6 +720,12 @@ function searchProduct(){
       c.style.display = 'none';
     }
   });
+
+  if(v.length > 0){
+    title.innerText = '🔍 Resultados da busca';
+  } else {
+    title.innerText = defaultTitle;
+  }
 
   noResults.style.display = found ? 'none' : 'block';
 }
@@ -833,6 +848,16 @@ function toggleCategories(){
   const sidebar = document.querySelector('.sidebar');
   sidebar.classList.toggle('active');
 }
+
+let defaultTitle = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const titleEl = document.getElementById('categoryTitle');
+  if(titleEl){
+    defaultTitle = titleEl.innerText;
+  }
+});
+
 
 </script>
 

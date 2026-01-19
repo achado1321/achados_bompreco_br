@@ -483,14 +483,15 @@ body.dark .dark-toggle{
   margin-right:8px;
 }
 #noResults{
-  display:none;          /* começa invisível */
-  text-align:center;     /* centraliza o texto horizontalmente */
-  margin:20px auto;      /* centraliza dentro da tela */
-  font-size:1.1rem;      /* tamanho legível */
-  line-height:1.5;       /* espaçamento confortável */
-  color:#000;            /* texto padrão */
+  display:none;
+  width:100%;
+  grid-column: 1 / -1;      /* ocupa todas as colunas do grid */
+  text-align:center;
+  margin:40px auto;
+  font-size:1.1rem;
+  line-height:1.6;
+  color:#000;
 }
-
 /* Dark mode */
 body.dark #noResults{
   color:#fff;            /* texto visível no dark mode */

@@ -567,6 +567,17 @@ body.dark #noResults{
     font-size:.95rem;
   }
 }
+.subcats{
+  display:none;
+  margin-left:15px;
+  margin-top:5px;
+}
+
+.subcats button{
+  font-size:.9rem;
+  padding:6px 10px;
+  opacity:.85;
+}
 </style>
 </head>
 
@@ -597,6 +608,15 @@ body.dark #noResults{
   <button onclick="filterCategory('all')">Todos</button>
   <button onclick="filterCategory('volta-aulas')">Volta às Aulas</button>
   <button onclick="filterCategory('cozinha')">Cozinha</button>
+  <button onclick="toggleSubcats('beleza'); filterCategory('beleza')">
+   Beleza e Cuidados Pessoais
+</button>
+
+<div class="subcats" id="subcats-beleza">
+  <button onclick="filterSubcategory('masculino')">Masculino</button>
+  <button onclick="filterSubcategory('feminino')">Feminino</button>
+  <button onclick="filterSubcategory('unissex')">Unissex</button>
+</div>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
@@ -722,30 +742,35 @@ onclick="openModal('Mini Processador Elétrico de Alimentos Portátil','Tritura 
 <script>
 
 function filterCategory(cat){
-  const title = document.getElementById('categoryTitle');
-  const cards = document.querySelectorAll('.card');
+  currentCategory = cat;
+  currentSubcategory = '';
 
+  const cards = document.querySelectorAll('.card');
+  const title = document.getElementById('categoryTitle');
   let found = false;
 
-  cards.forEach(c=>{
-    if(cat === 'all' || c.dataset.category === cat){
-      c.style.display = 'block';
+  cards.forEach(card => {
+    if(
+      cat === 'all' ||
+      card.dataset.category === cat
+    ){
+      card.style.display = 'block';
       found = true;
     } else {
-      c.style.display = 'none';
+      card.style.display = 'none';
     }
   });
 
-  // muda título conforme categoria
+  // título da categoria
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';
   } else if(cat === 'volta-aulas'){
     title.innerText = '🎒 Volta às Aulas';
   } else if(cat === 'cozinha'){
     title.innerText = '🥘 Cozinha';
+  } else if(cat === 'beleza'){
+    title.innerText = '🧼 Beleza e Cuidados Pessoais';
   }
-
-  defaultTitle = title.innerText;
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
 }
@@ -899,6 +924,43 @@ function toggleCategories(){
 
 let defaultTitle = document.getElementById('categoryTitle').innerText;
 
+function filterSubcategory(sub){
+  currentSubcategory = sub;
+
+  const cards = document.querySelectorAll('.card');
+  const title = document.getElementById('categoryTitle');
+  let found = false;
+
+  cards.forEach(card => {
+    const subs = card.dataset.subcategory || '';
+
+    if(
+      card.dataset.category === currentCategory &&
+      subs.includes(sub)
+    ){
+      card.style.display = 'block';
+      found = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  title.innerText =
+    title.innerText.split(' • ')[0] + ' • ' +
+    sub.charAt(0).toUpperCase() + sub.slice(1);
+
+  document.getElementById('noResults').style.display = found ? 'none' : 'block';
+}
+function toggleSubcats(cat){
+  document.querySelectorAll('.subcats').forEach(sc=>{
+    if(sc.id === 'subcats-' + cat){
+      sc.style.display =
+        sc.style.display === 'block' ? 'none' : 'block';
+    } else {
+      sc.style.display = 'none';
+    }
+  });
+}
 </script>
 
 </body>

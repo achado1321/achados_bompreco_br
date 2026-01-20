@@ -633,6 +633,22 @@ body.dark #noResults{
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
   </div>
+
+  <button onclick="toggleSubcats('casa'); filterCategory('casa')">
+   Casa e Utilidades Domésticas
+</button>
+
+<div class="subcats" id="subcats-casa">
+  <button onclick="filterSubcategory('móveis')">Móveis</button>
+  <button onclick="filterSubcategory('organização e limpeza')">Organização e Limpeza</button>
+  <button onclick="filterSubcategory('utensílios domésticos')">Utensílios Domésticos</button>
+  <button onclick="filterSubcategory('quarto')">Quarto</button>
+   <button onclick="filterSubcategory('lavanderia')">Lavanderia</button>
+</div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
+  </div>
 </aside>
 
 <section>
@@ -859,6 +875,8 @@ function filterCategory(cat){
     title.innerText = '🥘 Cozinha';
   } else if(cat === 'beleza'){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
+  } else if(cat === 'casa'){
+    title.innerText = '🏠 Casa e Utilidades Domésticas';
   }
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';

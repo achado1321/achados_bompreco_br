@@ -788,7 +788,19 @@ onclick="openModal('KIT Forma De Silicone Para Air Fryer Forno - Reutilizável A
 <img class="hover" src="https://imgur.com/qsDNY1R.png">
 <div class="info"><h3>KIT Forma De Silicone Para Air Fryer Forno - Reutilizável Antiaderente Flexível</h3><div class="price">R$18,50</div></div>
 </div>
-   
+
+
+
+
+
+
+
+
+
+
+   <!-- SHEIN PRODUCTS -->
+
+
   <!-- AVISO GLOBAL (vale para todas categorias e buscas) -->
 <p id="noResults">
   😞 Desculpe, não temos esses achados agora.<br>
@@ -891,17 +903,28 @@ let currentIndex = 0;
 let startX = 0;
 let isSwiping = false;
 
-function openModal(title, desc, price, link, images){
+function openModal(title, desc, price, link, images, store = 'shopee'){
   currentImages = images;
   currentIndex = 0;
 
   const modal = document.getElementById('modal');
   const thumbs = document.getElementById('thumbs');
+  const buyBtn = document.getElementById('modalLink');
 
   document.getElementById('modalTitle').innerText = title;
   document.getElementById('modalDesc').innerText = desc;
   document.getElementById('modalPrice').innerText = price;
-  document.getElementById('modalLink').href = link;
+
+  buyBtn.href = link;
+
+  // 🔥 AQUI DEFINE SHOPEE OU SHEIN
+  if(store === 'shein'){
+    buyBtn.innerText = 'Comprar na SHEIN 🖤';
+    buyBtn.style.background = '#000';
+  }else{
+    buyBtn.innerText = 'Comprar na Shopee 🧡';
+    buyBtn.style.background = 'var(--laranja)';
+  }
 
   changeImageWithFade(images[0]);
   thumbs.innerHTML = '';
@@ -924,6 +947,7 @@ function openModal(title, desc, price, link, images){
   modal.style.display = 'flex';
   enableSwipe();
 }
+
 function nextImage(){
   currentIndex = (currentIndex + 1) % currentImages.length;
   changeImageWithFade(currentImages[currentIndex]);
@@ -1038,6 +1062,22 @@ function toggleSubcats(cat){
     }
   });
 }
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+
+    const store = card.dataset.store || 'shopee';
+
+    openModal(
+      card.dataset.name,
+      card.dataset.desc,
+      card.dataset.price,
+      card.dataset.link,
+      JSON.parse(card.dataset.images),
+      store
+    );
+  });
+});
+
 </script>
 
 </body>

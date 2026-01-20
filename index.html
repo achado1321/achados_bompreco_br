@@ -641,6 +641,15 @@ body.dark #noResults{
    <button onclick="filterSubcategory('lavanderia')">Lavanderia</button>
    <button onclick="filterSubcategory('decoração')">Decoração</button>
 </div>
+   <button onclick="toggleSubcats('moda'); filterCategory('moda')">
+   Moda / Vestuário
+</button>
+
+<div class="subcats" id="subcats-casa">
+  <button onclick="filterSubcategory('masculinas')">Masculinas</button>
+  <button onclick="filterSubcategory('femininas')">Femininas</button>
+  <button onclick="filterSubcategory('Calçados')">Calçados</button>
+</div>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
@@ -954,6 +963,8 @@ function filterCategory(cat){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
   } else if(cat === 'casa'){
     title.innerText = '🏠 Casa e Utilidades Domésticas';
+  }else if(cat === 'moda'){
+    title.innerText = '👕 Moda / Vestuário';
   }
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';

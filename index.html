@@ -638,6 +638,7 @@ body.dark #noResults{
   <button onclick="filterSubcategory('organização e limpeza')">Organização e Limpeza</button>
   <button onclick="filterSubcategory('utensílios domésticos')">Utensílios Domésticos</button>
   <button onclick="filterSubcategory('quarto')">Quarto</button>
+  <button onclick="filterSubcategory('banheiro')">Banheiro</button>
    <button onclick="filterSubcategory('lavanderia')">Lavanderia</button>
    <button onclick="filterSubcategory('decoração')">Decoração</button>
 </div>
@@ -650,6 +651,15 @@ body.dark #noResults{
   <button onclick="filterSubcategory('feminino')">Feminino</button>
   <button onclick="filterSubcategory('calçados')">Calçados</button>
 </div>
+  <button onclick="toggleSubcats('tecno'); filterCategory('tecno')">
+   Eletrônicos / Tecnologia
+</button>
+
+<div class="subcats" id="subcats-tecno">
+  <button onclick="filterSubcategory('segurança e monitoramento')">Segurança e Monitoramento</button>
+  <button onclick="filterSubcategory('acessórios para celular')">Acessórios para Celular</button>
+</div>
+
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Buscar produto..." onkeyup="searchProduct()">
@@ -897,6 +907,47 @@ onclick="openModal('Camiseta Canelada Kit 2 Masculina Modelo Americano Canelada 
 <img class="hover" src="https://imgur.com/mbtGuNm.png">
 <div class="info"><h3>Camiseta Canelada Kit 2 Masculina Modelo Americano Canelada Básica</h3><div class="price">R$51,99</div></div>
 </div>
+   <!--Suporte de copo de escova d edentes -->
+
+<div class="card" data-category="casa" data-subcategory="banheiro" data-name="Suporte de Copo de Escova de Dente Simples para Montagem em Parede com gachos, organizador sem furo"
+onclick="openModal('Suporte de Copo de Escova de Dente Simples para Montagem em Parede com gachos, organizador sem furo','Organize seu banheiro com praticidade! Fixação sem furo, com ganchos funcionais para melhor organização. Design simples, resistente e fácil de instalar. Mais higiene, espaço e organização no dia a dia!','R$24,98 - R$44,98','https://s.shopee.com.br/gK05tMOV3',['https://imgur.com/cWDAeAx.png','https://imgur.com/46da6a7.png','https://imgur.com/pVUMhwk.png'])">
+<img class="main" src="https://imgur.com/jVat0nt.png">
+<img class="hover" src="https://imgur.com/FUDLj96.png">
+<div class="info"><h3>Suporte de Copo de Escova de Dente Simples para Montagem em Parede com gachos, organizador sem furo</h3><div class="price">R$24,98 - R$44,98</div></div>
+</div>
+     <!--Organizador de Rolos Duplo e Cortador de Plástico Filme Papel Alumínio Manteiga Ou 37cm x 12cm -->
+
+<div class="card" data-category="cozinha" data-name="Organizador de Rolos Duplo e Cortador de Plástico Filme Papel Alumínio Manteiga Ou 37cm x 12cm"
+onclick="openModal('Organizador de Rolos Duplo e Cortador de Plástico Filme Papel Alumínio Manteiga Ou 37cm x 12cm','Ideal para plástico filme, papel alumínio e manteiga! Mantém tudo organizado e facilita o corte com precisão. Design funcional, tamanho 37 cm x 12 cm, perfeito para otimizar espaço na cozinha. Mais praticidade e organização no seu dia a dia!','R$59,90','https://s.shopee.com.br/1BGGgoKUUA',['https://imgur.com/9nT6W9Q.png','https://imgur.com/v1DYNwy.png','https://imgur.com/GsDpQre.png'])">
+<img class="main" src="https://imgur.com/DmRnLbQ.png">
+<img class="hover" src="https://imgur.com/8INFWcU.png">
+<div class="info"><h3>Organizador de Rolos Duplo e Cortador de Plástico Filme Papel Alumínio Manteiga Ou 37cm x 12cm</h3><div class="price">R$59,90</div></div>
+</div>
+   <!--Câmera Wi-Fi 1080p, Rotação 360°, Rastreamento Automático, Câmera Interna e Externa, Segurança para Casa -->
+
+<div class="card" data-category="tecno" data-subcategory="segurança e monitoramento" data-name="Câmera Wi-Fi 1080p, Rotação 360°, Rastreamento Automático, Câmera Interna e Externa"
+onclick="openModal('Câmera Wi-Fi 1080p, Rotação 360°, Rastreamento Automático, Câmera Interna e Externa','Monitore ambientes internos e externos com alta definição. Conta com rotação 360°, rastreamento automático de movimentos e acesso remoto pelo celular. Mais segurança, controle e tranquilidade em tempo real! 📷🔒','R$63,49 - R$247,49','https://s.shopee.com.br/10wqUVL7p9',['https://imgur.com/nxwXgF8.png','https://imgur.com/8ew5zmP.png','https://imgur.com/sFiWDyN.png'])">
+<img class="main" src="https://imgur.com/qERpNND.png">
+<img class="hover" src="https://imgur.com/vQth3Ht.png">
+<div class="info"><h3>Câmera Wi-Fi 1080p, Rotação 360°, Rastreamento Automático, Câmera Interna e Externa</h3><div class="price">R$63,49 - R$247,49</div></div>
+</div>
+     <!--12 polegada Lupa Amplificador Tela De Celular Ampliador Aumenta Tela De Celular 3d Suporte Universal Zoom -->
+
+<div class="card" data-category="tecno" data-subcategory="acessórios para celular" data-name="12 polegada Lupa Amplificador Tela De Celular Ampliador Aumenta Tela De Celular 3d Suporte Universal Zoom"
+onclick="openModal('12 polegada Lupa Amplificador Tela De Celular Ampliador Aumenta Tela De Celular 3d Suporte Universal Zoom','Amplia a tela do celular em até 12 polegadas, proporcionando imagem maior e mais confortável. Com suporte universal e efeito 3D, é ideal para vídeos, filmes e leitura. Mais conforto visual e praticidade em qualquer lugar! 📱🎬','R$19,00','https://s.shopee.com.br/1Vt75QJDoG',['https://imgur.com/NriwGvM.png','https://imgur.com/Zo01qA7.png'])">
+<img class="main" src="https://imgur.com/7q1kePz.png">
+<img class="hover" src="https://imgur.com/o9Yi228.png">
+<div class="info"><h3>12 polegada Lupa Amplificador Tela De Celular Ampliador Aumenta Tela De Celular 3d Suporte Universal Zoom</h3><div class="price">R$19,00</div></div>
+</div>
+  <!--Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta Mágica -->
+
+<div class="card" data-category="casa" data-subcategory="organização e limpeza" data-name="Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta Mágica"
+onclick="openModal('Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta Mágica','A ferramenta mágica para facilitar a limpeza! Com 5 funções em 1, remove sujeiras com rapidez e eficiência, alcançando até os cantos mais difíceis. Mais praticidade, menos esforço e limpeza impecável! ✨🧼','R$21,70','https://s.shopee.com.br/1LZgt7Jr9F',['https://imgur.com/fQQnjnI.png','https://imgur.com/nePeO84.png','https://imgur.com/HdLKPU4.png','https://imgur.com/Hb6YEeY.png','https://imgur.com/o1JKAer.png'])">
+<img class="main" src="https://imgur.com/ckrssiU.png">
+<img class="hover" src="https://imgur.com/gs0xlZx.png">
+<div class="info"><h3>Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta Mágica</h3><div class="price">R$21,70</div></div>
+</div>
+  
   
 
 
@@ -1376,7 +1427,8 @@ function filterCategory(cat){
     title.innerText = '🏠 Casa e Utilidades Domésticas';
   }else if(cat === 'moda'){
     title.innerText = '👕 Moda / Vestuário';
-  }
+  }else if(cat === 'tecno'){
+    title.innerText = '💻 Eletrônicos / Tecnologia';
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
 }

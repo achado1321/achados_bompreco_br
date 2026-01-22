@@ -2,22 +2,25 @@ function filterCategory(cat){
   currentCategory = cat;
   currentSubcategory = '';
 
-  const cards = document.querySelectorAll('.card');
-  const title = document.getElementById('categoryTitle');
-  let found = false;
+  document.addEventListener('click', function (e) {
+  const card = e.target.closest('.card');
+  if (!card) return;
 
-  cards.forEach(card => {
-    if(
-      cat === 'all' ||
-      card.dataset.category === cat
-    ){
-      card.style.display = 'block';
-      found = true;
-    } else {
-      card.style.display = 'none';
-    }
-  });
+  const images = card.dataset.images
+    ? JSON.parse(card.dataset.images)
+    : [];
 
+  const store = card.dataset.store || 'shopee';
+
+  openModal(
+    card.dataset.name || '',
+    card.dataset.desc || '',
+    card.dataset.price || '',
+    card.dataset.link || '#',
+    images,
+    store
+  );
+});
   // título da categoria
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';

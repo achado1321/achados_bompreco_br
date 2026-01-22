@@ -14,3 +14,36 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// 🔐 LOGIN ADMIN
+const loginForm = document.getElementById("loginForm");
+const adminArea = document.getElementById("adminArea");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        loginForm.style.display = "none";
+        adminArea.style.display = "block";
+      })
+      .catch(err => {
+        alert("Login inválido");
+        console.error(err);
+      });
+  });
+}
+
+// 🔒 PROTEÇÃO AUTOMÁTICA
+auth.onAuthStateChanged(user => {
+  if (user) {
+    if (loginForm) loginForm.style.display = "none";
+    if (adminArea) adminArea.style.display = "block";
+  } else {
+    if (loginForm) loginForm.style.display = "block";
+    if (adminArea) adminArea.style.display = "none";
+  }
+});

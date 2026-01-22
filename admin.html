@@ -6,86 +6,180 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  font-family:Arial;
-  padding:20px;
-  background:#f4f4f4;
-  max-width:600px;
-  margin:auto;
+:root{
+  --azul:#4da3ff;
+  --azul-escuro:#1b2a4e;
+  --vidro:rgba(255,255,255,.25);
+  --vidro-dark:rgba(30,40,70,.45);
+  --borda:rgba(255,255,255,.35);
 }
 
-input, button{
-  padding:10px;
-  margin:6px 0;
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#cfe7ff,#e9f3ff);
+  transition:.3s;
+}
+
+body.dark{
+  background:linear-gradient(135deg,#0f172a,#020617);
+}
+
+.admin-box{
   width:100%;
+  max-width:560px;
+  padding:30px;
+  border-radius:22px;
+  backdrop-filter:blur(18px);
+  background:var(--vidro);
+  border:1px solid var(--borda);
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+body.dark .admin-box{
+  background:var(--vidro-dark);
+  border-color:rgba(255,255,255,.15);
+}
+
+h2,h3{
+  margin-top:0;
+  color:#123;
+}
+
+body.dark h2,
+body.dark h3{
+  color:#e8f0ff;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  margin:8px 0;
+  outline:none;
+}
+
+textarea{
+  resize:vertical;
+  min-height:80px;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select{
+  background:#0f172a;
+  color:#fff;
 }
 
 button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#4da3ff,#6bc1ff);
+  color:#fff;
+  font-weight:600;
   cursor:pointer;
 }
 
-.card{
-  background:#fff;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
+.delete{
+  background:linear-gradient(135deg,#ff5c5c,#ff3b3b);
 }
 
-.delete{
-  background:#c0392b;
+.card{
+  background:rgba(255,255,255,.35);
+  padding:12px;
+  border-radius:14px;
+  margin:10px 0;
+}
+
+body.dark .card{
+  background:rgba(255,255,255,.1);
   color:#fff;
-  border:none;
+}
+
+.toggle-dark{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:rgba(255,255,255,.35);
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:18px;
+}
+
+body.dark .toggle-dark{
+  background:rgba(255,255,255,.15);
+  color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<h2>📦 Admin de Produtos</h2>
+<div class="toggle-dark" onclick="toggleDark()">🌙</div>
 
-<!-- 🔐 LOGIN -->
-<form id="loginForm">
-  <input id="adminEmail" type="email" placeholder="Email do admin" required>
-  <input id="adminPassword" type="password" placeholder="Senha" required>
-  <button type="submit">Entrar</button>
-</form>
+<div class="admin-box">
 
-<!-- 🔓 ÁREA ADMIN (só aparece após login) -->
-<div id="adminArea" style="display:none">
+  <h2>📦 Admin de Produtos</h2>
 
- <h3>Novo produto</h3>
+  <!-- 🔐 LOGIN -->
+  <form id="loginForm">
+    <input id="adminEmail" type="email" placeholder="Email do admin" required>
+    <input id="adminPassword" type="password" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+  </form>
 
-<input id="name" placeholder="Nome do produto">
+  <!-- 🔓 ÁREA ADMIN -->
+  <div id="adminArea" style="display:none">
 
-<textarea id="desc" placeholder="Descrição do produto"></textarea>
+    <h3>Novo produto</h3>
 
-<input id="price" placeholder="Preço (ex: R$ 99,90)">
+    <input id="name" placeholder="Nome do produto">
+    <textarea id="desc" placeholder="Descrição do produto"></textarea>
+    <input id="price" placeholder="Preço (ex: R$ 99,90)">
 
-<select id="store">
-  <option value="shopee">Shopee</option>
-  <option value="shein">Shein</option>
-</select>
+    <select id="store">
+      <option value="shopee">Shopee</option>
+      <option value="shein">Shein</option>
+    </select>
 
-<input id="category" placeholder="Categoria (ex: casa, moda)">
-<input id="subcategory" placeholder="Subcategoria (opcional)">
+    <input id="category" placeholder="Categoria (ex: casa, moda)">
+    <input id="subcategory" placeholder="Subcategoria (opcional)">
 
-<input id="mainImg" placeholder="URL imagem principal">
-<input id="hoverImg" placeholder="URL imagem hover">
+    <input id="mainImg" placeholder="URL imagem principal">
+    <input id="hoverImg" placeholder="URL imagem hover">
+    <textarea id="modalImgs" placeholder="URLs das imagens do modal (1 por linha)"></textarea>
 
-<textarea id="modalImgs" placeholder="URLs imagens do modal (1 por linha)"></textarea>
+    <input id="link" placeholder="Link do produto">
 
-<input id="link" placeholder="Link do produto">
+    <button onclick="addProduct()">Adicionar Produto</button>
 
-<button onclick="addProduct()">Adicionar Produto</button>
+    <h3>Produtos cadastrados</h3>
+    <div id="list"></div>
 
-  <h3>Produtos cadastrados</h3>
-  <div id="list"></div>
+    <button onclick="logoutAdmin()">Sair</button>
 
-  <button onclick="logoutAdmin()">Sair</button>
+  </div>
 
 </div>
 
-<!-- Firebase SDKs -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -95,4 +189,3 @@ button{
 
 </body>
 </html>
-

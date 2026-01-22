@@ -2,25 +2,37 @@ function filterCategory(cat){
   currentCategory = cat;
   currentSubcategory = '';
 
-  document.addEventListener('click', function (e) {
+ document.addEventListener('click', function (e) {
   const card = e.target.closest('.card');
   if (!card) return;
 
-  const images = card.dataset.images
-    ? JSON.parse(card.dataset.images)
-    : [];
+  // ⛔ Se o card já usa onclick antigo, NÃO interfere
+  if (card.hasAttribute('onclick')) return;
 
+  const name  = card.dataset.name  || '';
+  const desc  = card.dataset.desc  || '';
+  const price = card.dataset.price || '';
+  const link  = card.dataset.link  || '#';
   const store = card.dataset.store || 'shopee';
 
-  openModal(
-    card.dataset.name || '',
-    card.dataset.desc || '',
-    card.dataset.price || '',
-    card.dataset.link || '#',
-    images,
-    store
-  );
+  let images = [];
+
+  if (card.dataset.images) {
+    try {
+      images = JSON.parse(card.dataset.images);
+    } catch {
+      images = [];
+    }
+  }
+
+  if (!images.length) {
+    const mainImg = card.querySelector('img.main');
+    if (mainImg) images.push(mainImg.src);
+  }
+
+  openModal(name, desc, price, link, images, store);
 });
+
   // título da categoria
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';

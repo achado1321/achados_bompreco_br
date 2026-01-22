@@ -483,17 +483,21 @@ body.dark .dark-toggle{
   margin-right:8px;
 }
 #noResults{
-  display:none;          /* começa invisível */
-  text-align:center;     /* centraliza o texto horizontalmente */
-  margin:20px auto;      /* centraliza dentro da tela */
-  font-size:1.1rem;      /* tamanho legível */
-  line-height:1.5;       /* espaçamento confortável */
-  color:#000;            /* texto padrão */
+  display:none;
+  grid-column:1 / -1;     /* ocupa todas as colunas */
+  text-align:center;
+  margin:40px auto;
+  padding:20px;
+  font-size:1.1rem;
+  line-height:1.6;
+  width:100%;
+  max-width:500px;
+  color:#000;
 }
 
 /* Dark mode */
 body.dark #noResults{
-  color:#fff;            /* texto visível no dark mode */
+  color:#fff;
 }
 
 /* MOBILE */
@@ -643,6 +647,29 @@ body.dark #noResults{
     height:220px;
   }
 }
+  /* ================= GRID FIREBASE (ADMIN) ================= */
+
+#productGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:20px;
+  width:100%;
+}
+
+/* Tablet */
+@media (max-width: 1024px){
+  #productGrid{
+    grid-template-columns:repeat(3, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px){
+  #productGrid{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
 
 </style>
 </head>

@@ -595,6 +595,25 @@ body.dark #noResults{
 
 <body>
 
+  <!-- ADMIN (OCULTO) -->
+<div id="adminPanel" style="display:none; padding:30px; background:#111; color:#fff">
+  <h2>Admin – Adicionar Produto</h2>
+
+  <input id="admName" placeholder="Nome"><br><br>
+  <input id="admPrice" placeholder="Preço"><br><br>
+  <input id="admCategory" placeholder="Categoria"><br><br>
+  <input id="admSubcategory" placeholder="Subcategoria"><br><br>
+  <input id="admStore" placeholder="store: shopee ou shein"><br><br>
+  <input id="admLink" placeholder="Link do produto"><br><br>
+
+  <textarea id="admDesc" placeholder="Descrição"></textarea><br><br>
+
+  <textarea id="admImages" placeholder="Imagens (uma por linha)"></textarea><br><br>
+
+  <button onclick="addProductAdmin()">Adicionar Produto</button>
+</div>
+
+
 <button class="dark-toggle" id="darkBtn" onclick="toggleDarkMode()">☀️</button>
 
 <!-- LANDING -->

@@ -647,30 +647,42 @@ body.dark #noResults{
     height:220px;
   }
 }
-  /* ================= GRID FIREBASE (ADMIN) ================= */
+ /* ===== AJUSTE PRODUTOS DO ADMIN (SEM QUEBRAR SITE) ===== */
 
 #productGrid{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
   gap:20px;
-  width:100%;
 }
 
 /* Tablet */
-@media (max-width: 1024px){
+@media (max-width:1024px){
   #productGrid{
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
 /* Mobile */
-@media (max-width: 768px){
+@media (max-width:768px){
   #productGrid{
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
   }
-}
-.grid{
-  display:grid;
+
+  #productGrid .card img{
+    height:170px;
+  }
+
+  #productGrid .card:hover{
+    transform:none;
+  }
+
+  #productGrid .card img.hover{
+    display:none;
+  }
+
+  #productGrid .card img.main{
+    display:block;
+  }
 }
 </style>
 </head>

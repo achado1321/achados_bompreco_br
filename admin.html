@@ -53,11 +53,30 @@ button{
 <!-- 🔓 ÁREA ADMIN (só aparece após login) -->
 <div id="adminArea" style="display:none">
 
-  <h3>Novo produto</h3>
-  <input id="name" placeholder="Nome do produto">
-  <input id="price" placeholder="Preço">
-  <input id="link" placeholder="Link">
-  <button onclick="addProduct()">Adicionar Produto</button>
+ <h3>Novo produto</h3>
+
+<input id="name" placeholder="Nome do produto">
+
+<textarea id="desc" placeholder="Descrição do produto"></textarea>
+
+<input id="price" placeholder="Preço (ex: R$ 99,90)">
+
+<select id="store">
+  <option value="shopee">Shopee</option>
+  <option value="shein">Shein</option>
+</select>
+
+<input id="category" placeholder="Categoria (ex: casa, moda)">
+<input id="subcategory" placeholder="Subcategoria (opcional)">
+
+<input id="mainImg" placeholder="URL imagem principal">
+<input id="hoverImg" placeholder="URL imagem hover">
+
+<textarea id="modalImgs" placeholder="URLs imagens do modal (1 por linha)"></textarea>
+
+<input id="link" placeholder="Link do produto">
+
+<button onclick="addProduct()">Adicionar Produto</button>
 
   <h3>Produtos cadastrados</h3>
   <div id="list"></div>

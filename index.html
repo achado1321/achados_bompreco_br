@@ -24,16 +24,8 @@
   --cinza:#f4f4f4;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-
-body{
-  margin:0;
-  background:var(--cinza);
-  transition:.3s;
-}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{margin:0;background:var(--cinza);transition:.3s;}
 
 /* ===== DARK TOGGLE ===== */
 .dark-toggle{
@@ -50,7 +42,7 @@ body{
   z-index:300;
 }
 
-/* ===== LANDING ===== */
+/* ===== GLASS LANDING ===== */
 .landing{
   min-height:100vh;
   display:flex;
@@ -59,7 +51,6 @@ body{
   background:linear-gradient(135deg,#6a0dad,#2a043f);
   padding:40px;
 }
-
 .glass{
   backdrop-filter:blur(15px);
   background:rgba(255,255,255,0.15);
@@ -70,12 +61,9 @@ body{
   display:flex;
   gap:40px;
   color:#fff;
-  animation:float 6s ease-in-out infinite;
 }
-
 .glass h1{font-size:3rem;}
 .glass p{font-size:1.2rem;margin:20px 0;}
-
 .glass a{
   background:var(--laranja);
   color:#fff;
@@ -84,29 +72,20 @@ body{
   text-decoration:none;
   font-weight:600;
 }
-
-.glass img{
-  max-width:280px;
-  width:100%;
-  animation:float 4s ease-in-out infinite;
-}
+.glass img{max-width:280px;width:100%;}
 
 /* ===== LAYOUT ===== */
 .layout{
   display:grid;
   grid-template-columns:260px 1fr;
-  gap:30px;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar{
   background:#fff;
   padding:30px 20px;
-  border-radius:16px;
 }
-
 .sidebar h3{margin-bottom:15px;}
-
 .sidebar button{
   display:block;
   width:100%;
@@ -117,10 +96,7 @@ body{
   cursor:pointer;
   border-radius:8px;
 }
-
-.sidebar button:hover{
-  background:#eee;
-}
+.sidebar button:hover{background:#eee;}
 
 /* ===== SEARCH ===== */
 .search-box{
@@ -128,7 +104,6 @@ body{
   gap:10px;
   margin-bottom:25px;
 }
-
 .search-box input{
   flex:1;
   padding:12px;
@@ -136,13 +111,11 @@ body{
   border:1px solid #ccc;
 }
 
-/* ===== PRODUTOS ===== */
-section{
-  padding:40px;
-}
-
+/* ===== GRID ===== */
+section{padding:40px;}
 .grid{
   display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
 }
 
@@ -153,40 +126,26 @@ section{
   overflow:hidden;
   cursor:pointer;
   box-shadow:0 10px 25px rgba(0,0,0,.1);
+  transition:.3s;
+}
+.card{
   transition:transform .3s ease, box-shadow .3s ease;
-  animation:cardFadeUp .5s ease forwards;
 }
 
 .card:hover{
   transform:translateY(-10px) scale(1.02);
   box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
-
 .card img{
   width:100%;
   height:260px;
   object-fit:cover;
-  transition:transform .4s ease;
 }
-
-.card:hover img{
-  transform:scale(1.05);
-}
-
 .card img.hover{display:none;}
 .card:hover img.main{display:none;}
 .card:hover img.hover{display:block;}
-
 .info{padding:15px;}
 .price{color:var(--laranja);font-weight:700;}
-
-#noResults{
-  display:none;
-  grid-column:1/-1;
-  text-align:center;
-  margin:40px auto;
-  font-size:1.1rem;
-}
 
 /* ===== MODAL ===== */
 .modal{
@@ -203,8 +162,8 @@ section{
   background:#fff;
   max-width:800px;
   width:95%;
-  max-height:90vh;
-  overflow-y:auto;
+  max-height:90vh;          /* 👈 limite de altura */
+  overflow-y:auto;          /* 👈 scroll interno */
   padding:20px;
   border-radius:20px;
   display:flex;
@@ -220,11 +179,13 @@ section{
 
 .carousel img{
   width:100%;
-  max-height:70vh;
-  object-fit:contain;
+  height:auto;           /* respeita proporção */
+  max-height:70vh;       /* limite baseado na tela */
+  object-fit:contain;    /* não corta a imagem */
   border-radius:16px;
 }
 
+/* BOTÃO FECHAR EM CIMA DA IMAGEM */
 .close{
   position:absolute;
   top:10px;
@@ -239,8 +200,153 @@ section{
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  z-index:10;
 }
 
+.thumbs{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+
+.thumbs img{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  cursor:pointer;
+  border-radius:8px;
+  opacity:.7;
+}
+
+.thumbs img:hover{
+  opacity:1;
+}
+
+.details{
+  width:100%;
+}
+
+.buy-btn{
+  background:var(--laranja);
+  color:#fff;
+  padding:14px 26px;
+  border-radius:30px;
+  text-decoration:none;
+  display:inline-block;
+  margin-top:15px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{order:-1;}
+  .glass{flex-direction:column;text-align:center;}
+}
+
+/* ===== DARK MODE (ROXO ESCURO MELHOR CONTRASTE) ===== */
+body.dark{
+  background:#0b0614; /* fundo principal */
+}
+
+body.dark .sidebar{
+  background:#140a24; /* fundo da sidebar */
+  color:#e6d9ff;
+}
+
+body.dark .card{
+  background:#1a0f2e;
+  color:#ffffff;
+}
+
+body.dark .modal-content{
+  background:#1a0f2e;
+  color:#ffffff;
+}
+
+/* Títulos */
+body.dark h1,
+body.dark h2,
+body.dark h3{
+  color:#e9ddff;
+}
+
+/* Texto comum */
+body.dark p{
+  color:#d2c1ff;
+}
+
+/* Busca */
+body.dark .search-box input{
+  background:#0f0820;
+  border:1px solid #3b1a6d;
+  color:#ffffff;
+}
+
+/* Categorias */
+body.dark .sidebar h3{
+  color:#caa8ff;
+}
+
+body.dark .sidebar button{
+  color:#b58cff;
+}
+
+body.dark .sidebar button:hover{
+  background:#2a1450;
+  color:#ffffff;
+}
+
+/* Botão dark */
+body.dark .dark-toggle{
+  background:#ffffff;
+  color:#3a135f;
+}
+
+@keyframes cardFadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.card{
+  animation:cardFadeUp .5s ease forwards;
+}
+.card img{
+  transition:transform .4s ease;
+}
+
+.card:hover img{
+  transform:scale(1.05);
+}
+/* ===== ANIMAÇÃO FLUTUANTE (LANDING PAGE) ===== */
+@keyframes float{
+  0%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-12px);
+  }
+  100%{
+    transform:translateY(0);
+  }
+}
+
+/* vidro (container principal) */
+.landing .glass{
+  animation:float 6s ease-in-out infinite;
+}
+
+/* imagem flutuando um pouco diferente */
+.landing img{
+  animation:float 4s ease-in-out infinite;
+}
+/* ===== SETAS DO MODAL ===== */
 .arrow{
   position:absolute;
   top:50%;
@@ -255,38 +361,96 @@ section{
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  user-select:none;
+  z-index:10;
 }
 
-.arrow.left{left:10px;}
-.arrow.right{right:10px;}
+.arrow.left{ left:10px; }
+.arrow.right{ right:10px; }
 
-.thumbs{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+.arrow:hover{
+  background:rgba(0,0,0,.8);
 }
-
-.thumbs img{
-  width:60px;
-  height:60px;
-  object-fit:cover;
-  cursor:pointer;
-  border-radius:8px;
-  opacity:.7;
-  transition:.3s;
+/* ===== ANIMAÇÃO SUAVE NA TROCA DE IMAGEM DO MODAL ===== */
+#mainImg{
+  opacity:1;
+  transition:opacity .25s ease;
 }
-
+/* ===== Thumbnail ativa MODAL ===== */
 .thumbs img.active{
-  border:2px solid var(--roxo);
+  border:2px solid #6a0dad;
   opacity:1;
   transform:scale(1.05);
 }
 
-/* ===== BOTÃO MOBILE ===== */
+.thumbs img{
+  transition:.3s;
+}
+@media (max-width: 600px){
+
+  section{
+    padding:20px;
+  }
+
+  h1{
+    font-size:2rem;
+  }
+
+  h2{
+    font-size:1.4rem;
+  }
+
+  h3{
+    font-size:1rem;
+  }
+
+  p{
+    font-size:.95rem;
+  }
+}
+@media (max-width: 600px){
+  .card img{
+    height:200px;
+  }
+}
+@media (max-width: 600px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+  }
+}
+@media (max-width: 600px){
+  .landing{
+    padding:20px;
+  }
+
+  .glass{
+    padding:30px 20px;
+  }
+
+  .glass h1{
+    font-size:2.2rem;
+  }
+
+  .glass p{
+    font-size:1rem;
+  }
+}
+@media (max-width: 600px){
+  .carousel img{
+    max-height:260px;
+  }
+
+  .modal-content{
+    padding:15px;
+  }
+}
+/* Botão só no mobile */
 .mobile-filter-btn{
   display:none;
   width:100%;
   padding:12px;
+  font-size:1rem;
   background:#6b3fc9;
   color:#fff;
   border:none;
@@ -295,80 +459,134 @@ section{
   cursor:pointer;
 }
 
-/* ===== DARK MODE ===== */
-body.dark{
-  background:#0b0614;
+/* Mobile */
+@media (max-width: 768px){
+  .mobile-filter-btn{
+    display:block;
+  }
+
+  .sidebar{
+    display:none;
+    margin-bottom:20px;
+  }
+
+  .sidebar.active{
+    display:block;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+}
+.menu-icon{
+  font-size:1.3rem;
+  margin-right:8px;
+}
+#noResults{
+  display:none;          /* começa invisível */
+  text-align:center;     /* centraliza o texto horizontalmente */
+  margin:20px auto;      /* centraliza dentro da tela */
+  font-size:1.1rem;      /* tamanho legível */
+  line-height:1.5;       /* espaçamento confortável */
+  color:#000;            /* texto padrão */
 }
 
-body.dark .sidebar,
-body.dark .card,
-body.dark .modal-content{
-  background:#1a0f2e;
-  color:#fff;
-}
-
-body.dark .search-box input{
-  background:#0f0820;
-  border:1px solid #3b1a6d;
-  color:#fff;
-}
-
+/* Dark mode */
 body.dark #noResults{
-  color:#fff;
+  color:#fff;            /* texto visível no dark mode */
 }
-
-/* ===== ANIMAÇÕES ===== */
-@keyframes float{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
-  100%{transform:translateY(0);}
-}
-
-@keyframes cardFadeUp{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* ===== RESPONSIVO FINAL ===== */
 
 /* MOBILE */
-@media (max-width:600px){
-  section{padding:20px;}
+@media (max-width: 768px){
+  #noResults{
+    font-size:1rem;      /* ajusta tamanho no celular */
+  }
+}
+/* ================= SIDEBAR ================= */
 
-  .glass{
-    padding:30px 20px;
-    flex-direction:column;
+/* Desktop: sidebar visível */
+.sidebar{
+  display:block;
+}
+
+/* Botão categorias escondido no desktop */
+.mobile-filter-btn{
+  display:none;
+}
+
+/* ================= MOBILE / TABLET ================= */
+@media (max-width: 1024px){
+  
+  /* Mostrar botão de categorias */
+  .mobile-filter-btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    font-size:1rem;
+    background:#6b3fc9;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    margin:15px 0;
+    cursor:pointer;
+  }
+
+  /* Sidebar escondida por padrão */
+  .sidebar{
+    display:none;
+    margin-bottom:20px;
+  }
+
+  /* Sidebar ativa ao clicar no botão */
+  .sidebar.active{
+    display:block;
+  }
+
+  /* Layout de produtos ocupa toda largura */
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  /* Grid de produtos responsiva */
+  .grid{
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:15px;
+  }
+
+  /* Aviso noResults */
+  #noResults{
+    font-size:1rem;
     text-align:center;
-  }
-
-  .glass h1{font-size:2.2rem;}
-  .glass p{font-size:1rem;}
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-  }
-
-  .card img{height:180px;}
-}
-
-/* TABLET */
-@media (min-width:601px) and (max-width:1024px){
-  .mobile-filter-btn{display:block;}
-  .sidebar{display:none;}
-  .sidebar.active{display:block;}
-  .layout{grid-template-columns:1fr;}
-
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+    margin:20px auto;
   }
 }
 
-/* DESKTOP */
-@media (min-width:1025px){
+/* Mobile ainda menor */
+@media (max-width: 768px){
+  #noResults{
+    font-size:.95rem;
+  }
+}
+.subcats{
+  display:none;
+  margin-left:15px;
+  margin-top:5px;
+}
+
+.subcats button{
+  font-size:.9rem;
+  padding:6px 10px;
+  opacity:.85;
+}
+@media (max-width: 768px){
   .grid{
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap:15px;
+  }
+}
+@media (max-width: 768px){
+  .card img{
+    height:180px;
   }
 }
 </style>

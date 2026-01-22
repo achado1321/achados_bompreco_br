@@ -1,44 +1,207 @@
-/* ===============================
-   VARIÁVEIS GLOBAIS
-================================ */
-let currentCategory = 'all';
-let currentSubcategory = '';
-let defaultTitle = document.getElementById('categoryTitle')?.innerText || '';
-
-/* ===============================
-   FILTRO DE CATEGORIA
-================================ */
 function filterCategory(cat){
   currentCategory = cat;
   currentSubcategory = '';
 
-  const cards = document.querySelectorAll('.card');
-  const title = document.getElementById('categoryTitle');
-  let found = false;
+  document.addEventListener('click', function (e) {
+  const card = e.target.closest('.card');
+  if (!card) return;
 
-  cards.forEach(card => {
-    if (cat === 'all' || card.dataset.category === cat) {
-      card.style.display = 'block';
-      found = true;
-    } else {
-      card.style.display = 'none';
+  const images = card.dataset.images
+    ? JSON.parse(card.dataset.images)
+    : [];
+
+  const store = card.dataset.store || 'shopee';
+
+  openModal(
+    card.dataset.name || '',
+    card.dataset.desc || '',
+    card.dataset.price || '',
+    card.dataset.link || '#',
+    images,
+    store
+  );
+});
+  // título da categoria
+  if(cat === 'all'){
+    title.innerText = '🔥 Achados em Destaque';
+  } else if(cat === 'volta-aulas'){
+    title.innerText = '🎒 Volta às Aulas';
+  } else if(cat === 'cozinha'){
+    title.innerText = '🥘 Cozinha';
+  } else if(cat === 'beleza'){
+    title.innerText = '🧼 Beleza e Cuidados Pessoais';
+  } else if(cat === 'casa'){
+    title.innerText = '🏠 Casa e Utilidades Domésticas';
+  }else if(cat === 'moda'){
+    title.innerText = '👕 Moda / Vestuário';
+  }else if(cat === 'tecno'){
+    title.innerText = '💻 Eletrônicos / Tecnologia';
     }
-  });
-
-  if(cat === 'all') title.innerText = '🔥 Achados em Destaque';
-  else if(cat === 'volta-aulas') title.innerText = '🎒 Volta às Aulas';
-  else if(cat === 'cozinha') title.innerText = '🥘 Cozinha';
-  else if(cat === 'beleza') title.innerText = '🧼 Beleza e Cuidados Pessoais';
-  else if(cat === 'casa') title.innerText = '🏠 Casa e Utilidades Domésticas';
-  else if(cat === 'moda') title.innerText = '👕 Moda / Vestuário';
-  else if(cat === 'tecno') title.innerText = '💻 Eletrônicos / Tecnologia';
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
 }
 
-/* ===============================
-   SUBCATEGORIA
-================================ */
+function searchProduct(){
+  const v = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  const noResults = document.getElementById('noResults');
+  const title = document.getElementById('categoryTitle');
+
+  let found = false;
+
+  cards.forEach(c=>{
+    if(c.dataset.name.toLowerCase().includes(v)){
+      c.style.display = 'block';
+      found = true;
+    } else {
+      c.style.display = 'none';
+    }
+  });
+
+  // muda título durante a busca
+  if(v.length > 0){
+    title.innerText = '🔍 Resultados da busca';
+  } else {
+    title.innerText = defaultTitle;
+  }
+
+  noResults.style.display = found ? 'none' : 'block';
+}
+
+function toggleDarkMode(){
+  document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').innerText =
+    document.body.classList.contains('dark') ? '🌙' : '☀️';
+}
+/* ===== MODAL FUNCTIONS ===== */
+
+let currentImages = [];
+let currentIndex = 0;
+let startX = 0;
+let isSwiping = false;
+
+function openModal(title, desc, price, link, images, store = 'shopee'){
+  currentImages = images;
+  currentIndex = 0;
+
+  const modal = document.getElementById('modal');
+  const thumbs = document.getElementById('thumbs');
+  const buyBtn = document.getElementById('modalLink');
+
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalDesc').innerText = desc;
+  document.getElementById('modalPrice').innerText = price;
+
+  buyBtn.href = link;
+
+  // 🔥 AQUI DEFINE SHOPEE OU SHEIN
+  if(store === 'shein'){
+    buyBtn.innerText = 'Comprar na SHEIN 🖤';
+    buyBtn.style.background = '#000';
+  }else{
+    buyBtn.innerText = 'Comprar na Shopee 🧡';
+    buyBtn.style.background = 'var(--laranja)';
+  }
+
+  changeImageWithFade(images[0]);
+  thumbs.innerHTML = '';
+
+  images.forEach((img, index)=>{
+    const t = document.createElement('img');
+    t.src = img;
+
+    if(index === 0) t.classList.add('active');
+
+    t.onclick = ()=>{
+      currentIndex = index;
+      changeImageWithFade(img);
+      updateActiveThumb();
+    };
+
+    thumbs.appendChild(t);
+  });
+
+  modal.style.display = 'flex';
+  enableSwipe();
+}
+
+function nextImage(){
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+function prevImage(){
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  changeImageWithFade(currentImages[currentIndex]);
+  updateActiveThumb();
+}
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+}
+
+/* ===== SWIPE MOBILE ===== */
+function enableSwipe(){
+  const mainImg = document.getElementById('mainImg');
+  if(!mainImg) return;
+
+  mainImg.ontouchstart = (e)=>{
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  };
+
+  mainImg.ontouchend = (e)=>{
+    if(!isSwiping) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if(diff > 50){
+      nextImage();
+    }else if(diff < -50){
+      prevImage();
+    }
+
+    isSwiping = false;
+  };
+}
+
+/* ===== FADE EFFECT ===== */
+function changeImageWithFade(src){
+  const img = document.getElementById('mainImg');
+  if(!img) return;
+
+  img.style.opacity = 0;
+
+  setTimeout(()=>{
+    img.src = src;
+    img.style.opacity = 1;
+  }, 150);
+}
+/* ===== FECHAR MODAL AO CLICAR FORA ===== */
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this){
+    closeModal();
+  }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    closeModal();
+  }
+});
+/* 👉 Thumnail Ativa modal */
+function updateActiveThumb(){
+  document.querySelectorAll('.thumbs img').forEach((thumb, i)=>{
+    thumb.classList.toggle('active', i === currentIndex);
+  });
+}
+/* 👉 Botão categoria mobile */
+function toggleCategories(){
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
+}
+
+let defaultTitle = document.getElementById('categoryTitle').innerText;
+
 function filterSubcategory(sub){
   currentSubcategory = sub;
 
@@ -48,7 +211,11 @@ function filterSubcategory(sub){
 
   cards.forEach(card => {
     const subs = card.dataset.subcategory || '';
-    if(card.dataset.category === currentCategory && subs.includes(sub)){
+
+    if(
+      card.dataset.category === currentCategory &&
+      subs.includes(sub)
+    ){
       card.style.display = 'block';
       found = true;
     } else {
@@ -62,159 +229,144 @@ function filterSubcategory(sub){
 
   document.getElementById('noResults').style.display = found ? 'none' : 'block';
 }
-
 function toggleSubcats(cat){
   document.querySelectorAll('.subcats').forEach(sc=>{
-    sc.style.display = (sc.id === 'subcats-' + cat)
-      ? (sc.style.display === 'block' ? 'none' : 'block')
-      : 'none';
-  });
-}
-
-/* ===============================
-   BUSCA
-================================ */
-function searchProduct(){
-  const v = document.getElementById('searchInput').value.toLowerCase();
-  const cards = document.querySelectorAll('.card');
-  const noResults = document.getElementById('noResults');
-  const title = document.getElementById('categoryTitle');
-  let found = false;
-
-  cards.forEach(card=>{
-    if(card.dataset.name?.toLowerCase().includes(v)){
-      card.style.display = 'block';
-      found = true;
+    if(sc.id === 'subcats-' + cat){
+      sc.style.display =
+        sc.style.display === 'block' ? 'none' : 'block';
     } else {
-      card.style.display = 'none';
+      sc.style.display = 'none';
     }
   });
+}
+document.querySelectorAll('.card').forEach(card => {
 
-  title.innerText = v.length ? '🔍 Resultados da busca' : defaultTitle;
-  noResults.style.display = found ? 'none' : 'block';
+  // ⛔ se já tem onclick antigo, não interfere
+  if (card.hasAttribute('onclick')) return;
+
+  card.addEventListener('click', () => {
+
+    const images = card.dataset.images
+      ? JSON.parse(card.dataset.images)
+      : [card.querySelector('img.main')?.src];
+
+    const store = card.dataset.store || 'shopee';
+
+    openModal(
+      card.dataset.name || '',
+      card.dataset.desc || '',
+      card.dataset.price || '',
+      card.dataset.link || '#',
+      images,              // ✅ USA A VARIÁVEL
+      store
+    );
+  });
+});
+// 🔒 ADMIN OCULTO
+if (location.hash === '#admin') {
+  document.getElementById('adminPanel').style.display = 'block';
+}
+function addProductAdmin(){
+  const product = {
+    name: admName.value,
+    price: admPrice.value,
+    category: admCategory.value,
+    subcategory: admSubcategory.value,
+    store: admStore.value || 'shopee',
+    link: admLink.value,
+    desc: admDesc.value,
+    images: admImages.value.split('\n')
+  };
+
+  const products = JSON.parse(localStorage.getItem('adminProducts') || '[]');
+  products.push(product);
+  localStorage.setItem('adminProducts', JSON.stringify(products));
+
+  renderAdminProducts();
+  alert('Produto adicionado!');
 }
 
-/* ===============================
-   DARK MODE
-================================ */
-function toggleDarkMode(){
-  document.body.classList.toggle('dark');
-  document.getElementById('darkBtn').innerText =
-    document.body.classList.contains('dark') ? '🌙' : '☀️';
+function renderAdminProducts(){
+  const products = JSON.parse(localStorage.getItem('adminProducts') || '[]');
+  const grid = document.querySelector('.grid');
+  if (!grid) return;
+
+  products.forEach(produto => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.dataset.category = produto.category;
+    card.dataset.subcategory = produto.subcategory;
+    card.dataset.name = produto.name;
+    card.dataset.desc = produto.desc;
+    card.dataset.price = produto.price;
+    card.dataset.link = produto.link;
+    card.dataset.store = produto.store;
+    card.dataset.images = JSON.stringify(produto.images);
+
+    card.innerHTML = `
+      <img class="main" src="${produto.images[0]}">
+      <img class="hover" src="${produto.images[1] || produto.images[0]}">
+      <div class="info">
+        <h3>${produto.name}</h3>
+        <div class="price">${produto.price}</div>
+      </div>
+    `;
+
+    card.onclick = () => openModal(
+      produto.name,
+      produto.desc,
+      produto.price,
+      produto.link,
+      produto.images,
+      produto.store
+    );
+
+    grid.prepend(card);
+  });
 }
 
-/* ===============================
-   MODAL
-================================ */
-let currentImages = [];
-let currentIndex = 0;
+renderAdminProducts();
+// ===== PRODUTOS ADMIN =====
+let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
-function openModal(title, desc, price, link, images, store='shopee'){
-  currentImages = images || [];
-  currentIndex = 0;
+function addProduct(){
+  const name = document.getElementById('name').value;
+  const price = document.getElementById('price').value;
+  const link = document.getElementById('link').value;
 
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalDesc').innerText = desc;
-  document.getElementById('modalPrice').innerText = price;
-
-  const buyBtn = document.getElementById('modalLink');
-  buyBtn.href = link;
-
-  if(store === 'shein'){
-    buyBtn.innerText = 'Comprar na SHEIN 🖤';
-    buyBtn.style.background = '#000';
-  }else{
-    buyBtn.innerText = 'Comprar na Shopee 🧡';
-    buyBtn.style.background = 'var(--laranja)';
+  if(!name || !price || !link){
+    alert('Preencha tudo');
+    return;
   }
 
-  renderModalImages();
-  document.getElementById('modal').style.display = 'flex';
+  produtos.push({ name, price, link });
+  localStorage.setItem('produtos', JSON.stringify(produtos));
+  renderAdmin();
 }
 
-function renderModalImages(){
-  const mainImg = document.getElementById('mainImg');
-  const thumbs = document.getElementById('thumbs');
-  thumbs.innerHTML = '';
+function deleteProduct(index){
+  if(!confirm('Excluir produto?')) return;
+  produtos.splice(index,1);
+  localStorage.setItem('produtos', JSON.stringify(produtos));
+  renderAdmin();
+}
 
-  if(!currentImages.length) return;
+function renderAdmin(){
+  const list = document.getElementById('list');
+  if(!list) return;
 
-  mainImg.src = currentImages[0];
-
-  currentImages.forEach((img,i)=>{
-    const t = document.createElement('img');
-    t.src = img;
-    if(i === 0) t.classList.add('active');
-    t.onclick = ()=>{
-      currentIndex = i;
-      mainImg.src = img;
-      updateActiveThumb();
-    };
-    thumbs.appendChild(t);
+  list.innerHTML = '';
+  produtos.forEach((p,i)=>{
+    list.innerHTML += `
+      <div class="card">
+        <strong>${p.name}</strong><br>
+        ${p.price}<br>
+        <button class="delete" onclick="deleteProduct(${i})">Excluir</button>
+      </div>
+    `;
   });
 }
 
-function nextImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  document.getElementById('mainImg').src = currentImages[currentIndex];
-  updateActiveThumb();
-}
+renderAdmin();
 
-function prevImage(){
-  if(!currentImages.length) return;
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  document.getElementById('mainImg').src = currentImages[currentIndex];
-  updateActiveThumb();
-}
-
-function closeModal(){
-  document.getElementById('modal').style.display = 'none';
-}
-
-function updateActiveThumb(){
-  document.querySelectorAll('.thumbs img').forEach((t,i)=>{
-    t.classList.toggle('active', i === currentIndex);
-  });
-}
-
-/* ===============================
-   FECHAR MODAL
-================================ */
-document.getElementById('modal')?.addEventListener('click', e=>{
-  if(e.target.id === 'modal') closeModal();
-});
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape') closeModal();
-});
-
-/* ===============================
-   CLIQUE GLOBAL NOS CARDS
-   (HTML + Firebase)
-================================ */
-document.addEventListener('click', function(e){
-  const card = e.target.closest('.card');
-  if(!card) return;
-
-  const images = card.dataset.images
-    ? JSON.parse(card.dataset.images)
-    : [
-        card.querySelector('img.main')?.src
-      ];
-
-  openModal(
-    card.dataset.name || '',
-    card.dataset.desc || '',
-    card.dataset.price || '',
-    card.dataset.link || '#',
-    images,
-    card.dataset.store || 'shopee'
-  );
-});
-
-/* ===============================
-   MOBILE CATEGORIAS
-================================ */
-function toggleCategories(){
-  document.querySelector('.sidebar')?.classList.toggle('active');
-}

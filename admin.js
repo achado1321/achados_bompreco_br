@@ -1,4 +1,4 @@
-// 🔥 CONFIG FIREBASE)
+// 🔥 CONFIG FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyB2hYymrzOG__95wxyrG3soEjinVD9ONvM",
   authDomain: "achadosebompre.firebaseapp.com",

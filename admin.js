@@ -125,3 +125,17 @@ window.deleteProduct = function (id) {
 window.logoutAdmin = function () {
   auth.signOut();
 };
+
+
+window.toggleDark = function(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem(
+    'adminDark',
+    document.body.classList.contains('dark')
+  );
+};
+
+if(localStorage.getItem('adminDark') === 'true'){
+  document.body.classList.add('dark');
+}
+

@@ -47,3 +47,30 @@ auth.onAuthStateChanged(user => {
     if (adminArea) adminArea.style.display = "none";
   }
 });
+// 📦 REFERÊNCIA DA COLEÇÃO
+const produtosRef = db.collection("produtos");
+
+// ➕ ADICIONAR PRODUTO (versão inicial)
+function addProduct() {
+  const name = document.getElementById("name").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const link = document.getElementById("link").value.trim();
+
+  if (!name || !price || !link) {
+    alert("Preencha nome, preço e link.");
+    return;
+  }
+
+  produtosRef.add({
+    name,
+    price,
+    link,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("link").value = "";
+    loadProducts();
+  });
+}
+

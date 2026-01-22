@@ -11,7 +11,7 @@ function filterCategory(cat){
   currentSubcategory = '';
 
   const cards = document.querySelectorAll('.card');
-  const title = document.getElementById('categoryTitle');
+  const title = document.getElementById('categoryTitle'); // ✅ CORREÇÃO
   let found = false;
 
   cards.forEach(card => {
@@ -23,6 +23,7 @@ function filterCategory(cat){
     }
   });
 
+  // TÍTULO
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';
   } else if(cat === 'volta-aulas'){

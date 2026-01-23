@@ -35,6 +35,8 @@ function filterCategory(cat){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
   } else if(cat === 'casa'){
     title.innerText = '🏠 Casa e Utilidades Domésticas';
+ } else if(cat === 'pet'){
+    title.innerText = '🐾 Pet Shop';
   } else if(cat === 'moda'){
     title.innerText = '👕 Moda / Vestuário';
   } else if(cat === 'tecno'){

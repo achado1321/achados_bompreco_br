@@ -684,6 +684,34 @@ body.dark #noResults{
     display:block;
   }
 }
+  /* ===== FIX SEGURO – PRODUTOS FIREBASE ===== */
+#productGrid{
+  display:grid;
+  width:100%;
+  max-width:100%;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:16px;
+}
+
+/* Mobile */
+@media (max-width:768px){
+  #productGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+/* Tablet */
+@media (min-width:769px) and (max-width:1024px){
+  #productGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+/* Segurança contra cards espremidos */
+#productGrid .card{
+  width:100%;
+  max-width:100%;
+}
 </style>
 </head>
 

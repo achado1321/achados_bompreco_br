@@ -30,7 +30,7 @@ function filterCategory(cat){
   if(cat === 'all'){
     title.innerText = '🔥 Achados em Destaque';
   } else if(cat === 'volta-aulas'){
-    title.innerText = '🎒 Volta às Aulas';
+    title.innerText = '✏️ Papelaria';
   } else if(cat === 'beleza'){
     title.innerText = '🧼 Beleza e Cuidados Pessoais';
   } else if(cat === 'casa'){

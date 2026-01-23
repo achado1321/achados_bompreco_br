@@ -684,33 +684,21 @@ body.dark #noResults{
     display:block;
   }
 }
-  /* ===== FIX SEGURO – PRODUTOS FIREBASE ===== */
-#productGrid{
-  display:grid;
+ /* ===== ISOLAMENTO SEGURO DO FIREBASE ===== */
+.products-wrapper{
   width:100%;
   max-width:100%;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:16px;
 }
 
-/* Mobile */
-@media (max-width:768px){
-  #productGrid{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-/* Tablet */
-@media (min-width:769px) and (max-width:1024px){
-  #productGrid{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-/* Segurança contra cards espremidos */
-#productGrid .card{
+/* garante que o grid calcule largura corretamente */
+.products-wrapper .grid{
   width:100%;
-  max-width:100%;
+  margin:0 auto;
+}
+
+/* evita coluna fantasma */
+.products-wrapper{
+  overflow:hidden;
 }
 </style>
 </head>
@@ -1495,21 +1483,10 @@ onclick="openModal('Escova de Limpeza Multifuncional Elétrica 5 em1 Ferramenta 
     <div class="price">R$203,95</div></div>
 </div>
   
-  <div class="grid" id="productGrid">
-  <!-- PRODUTOS NOVOS (Firebase) -->
+<div class="products-wrapper">
+  <div class="grid" id="productGrid"></div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
+  
   <!-- AVISO GLOBAL (vale para todas categorias e buscas) -->
 <p id="noResults">
   😞 Desculpe, não temos esses achados agora.<br>

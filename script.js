@@ -323,4 +323,5 @@ function startMobileHoverLoopSafe(){
     }
   }, 5000);
 }
+setTimeout(startMobileHoverLoopSafe, 2000);
 

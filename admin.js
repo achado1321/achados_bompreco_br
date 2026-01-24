@@ -2,6 +2,33 @@
 
 console.log("admin.js carregado corretamente");
 
+function normalizeImageUrl(url){
+  if(!url) return "";
+
+  url = url.trim();
+
+  // se for só o código do imgur (ex: AbC1234)
+  if(/^[a-zA-Z0-9]{5,10}$/.test(url)){
+    return `https://i.imgur.com/${url}.png`;
+  }
+
+  // já está no formato direto
+  if(url.includes("i.imgur.com")) return url;
+
+  // formato imgur.com/xxxx -> i.imgur.com/xxxx.png
+  if(url.includes("imgur.com/")){
+    const id = url.split("imgur.com/")[1]
+      .split(/[?#]/)[0]
+      .replace(".png","")
+      .replace(".jpg","")
+      .replace(".jpeg","");
+    return `https://i.imgur.com/${id}.png`;
+  }
+
+  // qualquer outro link externo (não mexe)
+  return url;
+}
+
 // 🔥 CONFIG FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyB2hYymrzOG__95wxyrG3soEjinVD9ONvM",
@@ -76,8 +103,8 @@ window.addProduct = function () {
   const store = document.getElementById("store").value;
   const category = document.getElementById("category").value.trim();
   const subcategory = document.getElementById("subcategory").value.trim();
-  const mainImg = document.getElementById("mainImg").value.trim();
-  const hoverImg = document.getElementById("hoverImg").value.trim();
+  const mainImg = normalizeImageUrl(document.getElementById("mainImg").value);
+  const hoverImg = normalizeImageUrl(document.getElementById("hoverImg").value);
   const modalImgsRaw = document.getElementById("modalImgs").value.trim();
   const link = document.getElementById("link").value.trim();
 
@@ -86,9 +113,9 @@ window.addProduct = function () {
     return;
   }
 
-  const modalImages = modalImgsRaw
-    ? modalImgsRaw.split("\n").map(i => i.trim()).filter(Boolean)
-    : [];
+ const modalImages = modalImgsRaw
+  ? modalImgsRaw.split("\n").map(i => normalizeImageUrl(i)).filter(Boolean)
+  : [];
 
   const productData = {
   name,

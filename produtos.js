@@ -48,3 +48,12 @@ db.collection("produtos")
     });
 
   });
+
+ // ✅ Main e Hover/Mobile (cards main e hover mobile)
+    setTimeout(() => {
+      if(typeof startMobileVisibleHoverLoop === "function"){
+        startMobileVisibleHoverLoop();
+      }
+    }, 300);
+
+  });

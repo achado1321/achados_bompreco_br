@@ -22,7 +22,7 @@ function normalizeImageUrl(url){
       .replace(".png","")
       .replace(".jpg","")
       .replace(".jpeg","");
-    return `https://i.imgur.com/${id}.png`;
+    return `https://i.imgur.com/${id}.jpg`;
   }
 
   // qualquer outro link externo (não mexe)

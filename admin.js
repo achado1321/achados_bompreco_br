@@ -108,6 +108,20 @@ window.editProduct = function (id) {
       (p.images?.modal || []).join("\n");
     document.getElementById("link").value = p.link || "";
 
+    // ✅ muda automaticamente para aba "Adicionar"
+const addBtn = document.querySelectorAll(".fx-nav")[0]; // botão adicionar
+if (typeof switchView === "function" && addBtn) {
+  switchView("add", addBtn);
+}
+
+// ✅ título
+const title = document.getElementById("pageTitle");
+if (title) title.innerText = "Editando produto ✏️";
+
+// ✅ mostrar botão cancelar
+const cancelBtn = document.getElementById("cancelEditBtn");
+if (cancelBtn) cancelBtn.style.display = "block";
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 };

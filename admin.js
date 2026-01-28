@@ -168,6 +168,14 @@ if (editingProductId) {
   produtosRef.doc(editingProductId).update(productData);
   editingProductId = null;
   alert("Produto atualizado com sucesso!");
+
+  // ✅ reset UI após editar
+  const cancelBtn = document.getElementById("cancelEditBtn");
+  if (cancelBtn) cancelBtn.style.display = "none";
+
+  const title = document.getElementById("pageTitle");
+  if (title) title.innerText = "Adicionar produto";
+
 } else {
   // ➕ ADICIONAR PRODUTO
   produtosRef.add({
@@ -176,10 +184,9 @@ if (editingProductId) {
   });
   alert("Produto adicionado com sucesso!");
 }
-  
   // limpa formulário
-  document.querySelectorAll("#adminArea input, #adminArea textarea")
-    .forEach(el => el.value = "");
+  document.querySelectorAll("#viewAdd input, #viewAdd textarea, #viewAdd select")
+  .forEach(el => el.value = "");
 };
 
 editingProductId = null;

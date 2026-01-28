@@ -182,17 +182,25 @@ function loadProducts() {
       const p = doc.data();
 
       const div = document.createElement("div");
-      div.className = "card";
+div.className = "fx-card";
 
-    div.innerHTML = `
-  <strong>${p.name}</strong><br>
-  ${p.price}<br>
-  <a href="${p.link}" target="_blank">Link</a><br><br>
+div.innerHTML = `
+  <img src="${p.images?.main || ""}" alt="">
+  <div class="info">
+    <strong>${p.name || ""}</strong>
+    <div class="meta">
+      ${p.category || ""} ${p.subcategory ? "• " + p.subcategory : ""}
+      ${p.store ? "• " + p.store.toUpperCase() : ""}
+    </div>
 
-  <button onclick="editProduct('${doc.id}')">Editar</button>
-  <button class="delete" onclick="deleteProduct('${doc.id}')">Excluir</button>
+    <div class="price">${p.price || ""}</div>
+
+    <div class="actions">
+      <button class="edit" onclick="editProduct('${doc.id}')">Editar</button>
+      <button class="del" onclick="deleteProduct('${doc.id}')">Excluir</button>
+    </div>
+  </div>
 `;
-
       list.appendChild(div);
     });
   });

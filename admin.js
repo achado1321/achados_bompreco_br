@@ -4,28 +4,45 @@ console.log("admin.js carregado corretamente");
 
 function normalizeImageUrl(url){
   if(!url) return "";
-
   url = url.trim();
 
-  // se for só o código do imgur (ex: AbC1234)
-  if(/^[a-zA-Z0-9]{5,10}$/.test(url)){
-    return `https://i.imgur.com/${url}.png`;
+  // 1) Se já for link direto (com extensão), não mexe
+  // Ex: https://i.imgur.com/abc123.png
+  // Ex: https://i.imgur.com/abc123.jpg
+  if(url.match(/^https?:\/\/i\.imgur\.com\/.+\.(png|jpg|jpeg|webp)(\?.*)?$/i)){
+    return url;
   }
 
-  // já está no formato direto
-  if(url.includes("i.imgur.com")) return url;
+  // 2) Se já for qualquer link com extensão final, não mexe
+  // (serve pra links fora do imgur também)
+  if(url.match(/\.(png|jpg|jpeg|webp)(\?.*)?$/i)){
+    return url;
+  }
 
-  // formato imgur.com/xxxx -> i.imgur.com/xxxx.png
+  // 3) Se usuário colar só o código do imgur (abc123)
+  if(/^[a-zA-Z0-9]{5,10}$/.test(url)){
+    // padrão: jpg (mais leve)
+    return `https://i.imgur.com/${url}.jpg`;
+  }
+
+  // 4) Se for link imgur.com/xxxx
   if(url.includes("imgur.com/")){
-    const id = url.split("imgur.com/")[1]
-      .split(/[?#]/)[0]
-      .replace(".png","")
-      .replace(".jpg","")
-      .replace(".jpeg","");
+    let id = url.split("imgur.com/")[1].split(/[?#]/)[0];
+
+    // remove extensão se veio junto
+    id = id.replace(/\.(png|jpg|jpeg|webp)$/i, "");
+
+    // padrão: jpg (mais leve)
     return `https://i.imgur.com/${id}.jpg`;
   }
 
-  // qualquer outro link externo (não mexe)
+  // 5) Se já for i.imgur.com/xxxx mas sem extensão
+  if(url.includes("i.imgur.com/")){
+    // coloca jpg por padrão
+    return url + ".jpg";
+  }
+
+  // 6) outros links externos
   return url;
 }
 

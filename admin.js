@@ -245,3 +245,19 @@ if(localStorage.getItem('adminDark') === 'true'){
   document.body.classList.add('dark');
 }
 
+window.cancelEdit = function(){
+  editingProductId = null;
+
+  // limpa formulário
+  document.querySelectorAll("#viewAdd input, #viewAdd textarea, #viewAdd select")
+    .forEach(el => el.value = "");
+
+  // esconder botão cancelar
+  const cancelBtn = document.getElementById("cancelEditBtn");
+  if (cancelBtn) cancelBtn.style.display = "none";
+
+  // voltar título
+  const title = document.getElementById("pageTitle");
+  if (title) title.innerText = "Adicionar produto";
+};
+
